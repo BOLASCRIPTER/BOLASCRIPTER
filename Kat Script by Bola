@@ -1,0 +1,194 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("ClosetHackz Beta #BOLA", "Synapse")
+
+--Tabs
+local Tab1 = Window:NewTab("Features")
+local Section1 = Tab1:NewSection("Speed")
+local Section2 = Tab1:NewSection("JumpPower")
+local Section3 = Tab1:NewSection("GodMode")
+local Section4 = Tab1:NewSection("AimBot")
+local Section5 = Tab1:NewSection("KillAll")
+local Section6 = Tab1:NewSection("AnnoyServer")
+local Section7 = Tab1:NewSection("Rtx")
+local Section8 = Tab1:NewSection(" FE Invisible")
+local Tab2 = Window:NewTab("Visuals")
+local Section9 = Tab2:NewSection("ESP AND TRACERS")
+local Section10 = Tab2:NewSection("HitBox")
+local Tab3 = Window:NewTab("Credits")
+local Section11 = Tab3:NewSection("NeonHub for esp and tracers")
+local Section12 = Tab3:NewSection("Owner BOLA#3927")
+local Section13 = Tab3:NewSection("Jh Nn Bad")
+
+--Button 
+
+Section1:NewSlider("Speed", "Makes The Player Faster", 120, 16,function(s)
+  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+  end)
+
+Section2:NewSlider("JumpPower", "Makes The Player Jump Stronger", 235, 60,function(s)
+  game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+  end)
+  
+Section3:NewButton("Godmode", "Makes u immune to hits and shots", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Cesare0328/my-scripts/main/K.A.T.G.O.D.M.O.D.E.lua', true))()
+end)
+
+Section4:NewButton("Aimbot", "Hits anyone without aiming!", function()
+    local Camera = game:GetService("Workspace").CurrentCamera
+local Players = game:GetService("Players")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+
+local function GetClosestPlayer()
+   local ClosestPlayer = nil
+   local FarthestDistance = math.huge
+
+   for i, v in pairs(Players.GetPlayers(Players)) do
+       if v ~= LocalPlayer and v.Character and v.Character.FindFirstChild(v.Character, "HumanoidRootPart") then
+           local DistanceFromPlayer = (LocalPlayer.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude
+
+           if DistanceFromPlayer < FarthestDistance then
+               FarthestDistance = DistanceFromPlayer
+               ClosestPlayer = v
+           end
+       end
+   end
+
+   if ClosestPlayer then
+       return ClosestPlayer
+   end
+end
+
+local GameMetaTable = getrawmetatable(game)
+local OldGameMetaTableNamecall = GameMetaTable.__namecall
+setreadonly(GameMetaTable, false)
+
+GameMetaTable.__namecall = newcclosure(function(object, ...)
+   local NamecallMethod = getnamecallmethod()
+   local Arguments = {...}
+
+   if tostring(NamecallMethod) == "FindPartOnRayWithIgnoreList" then
+       local ClosestPlayer = GetClosestPlayer()
+       
+       if ClosestPlayer and ClosestPlayer.Character then
+           Arguments[1] = Ray.new(Camera.CFrame.Position, (ClosestPlayer.Character.Head.Position - Camera.CFrame.Position).Unit * (Camera.CFrame.Position - ClosestPlayer.Character.Head.Position).Magnitude)
+       end
+   end
+
+   return OldGameMetaTableNamecall(object, unpack(Arguments))
+end)
+
+setreadonly(GameMetaTable, true)
+end)
+
+Section5:NewButton("Kill all", "Kills everyone", function()
+    loadstring("\108\111\99\97\108\32\76\80\32\61\32\103\97\109\101\58\71\101\116\83\101\114\118\105\99\101\40\34\80\108\97\121\101\114\115\34\41\46\76\111\99\97\108\80\108\97\121\101\114\10\119\104\105\108\101\32\119\97\105\116\40\48\46\49\41\32\100\111\10\102\111\114\32\105\44\118\32\105\110\32\112\97\105\114\115\40\103\97\109\101\58\71\101\116\83\101\114\118\105\99\101\40\34\80\108\97\121\101\114\115\34\41\58\71\101\116\80\108\97\121\101\114\115\40\41\41\32\100\111\10\105\102\32\118\32\97\110\100\32\118\46\67\104\97\114\97\99\116\101\114\32\97\110\100\32\118\32\126\61\32\76\80\32\97\110\100\32\118\46\67\104\97\114\97\99\116\101\114\58\70\105\110\100\70\105\114\115\116\67\104\105\108\100\40\34\72\101\97\100\34\41\32\116\104\101\110\10\108\111\99\97\108\32\104\114\112\32\61\32\118\46\67\104\97\114\97\99\116\101\114\58\70\105\110\100\70\105\114\115\116\67\104\105\108\100\40\34\72\101\97\100\34\41\32\10\104\114\112\58\66\114\101\97\107\74\111\105\110\116\115\40\41\10\104\114\112\46\84\114\97\110\115\112\97\114\101\110\99\121\32\61\32\48\10\104\114\112\46\66\114\105\99\107\67\111\108\111\114\32\61\32\118\46\84\101\97\109\67\111\108\111\114\10\104\114\112\46\65\110\99\104\111\114\101\100\32\61\32\116\114\117\101\10\104\114\112\46\67\97\110\67\111\108\108\105\100\101\32\61\32\102\97\108\115\101\10\112\99\97\108\108\40\102\117\110\99\116\105\111\110\40\41\10\104\114\112\46\67\70\114\97\109\101\32\61\32\76\80\46\67\104\97\114\97\99\116\101\114\46\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116\46\67\70\114\97\109\101\32\42\32\67\70\114\97\109\101\46\110\101\119\40\49\44\48\44\45\51\46\53\41\10\101\110\100\41\10\101\110\100\10\101\110\100\10\101\110\100\10")()
+end)
+
+Section6:NewButton("Annoy server", "Spams the error sound", function()
+    while wait(0.1) do
+for i,v in pairs(game.Players:GetChildren()) do
+  if v~=game.Players.LocalPlayer then
+  pcall(function()
+  local args = {
+   [1] = {
+       ["AttackType"] = "Slash",
+       ["attackID"] = 6,
+       ["HitVelocity"] = Vector3.new(-0.7990695238113403, 0.0010541095398366451, -0.6012377142906189),
+       ["WeaponSkin"] = "StockKnife",
+       ["DamageType"] = "Knife",
+       ["PowerName"] = "DefaultKnifePower",
+       ["hitPart"] = "Torso",
+       ["TargetCharacter"] = v.Character,
+       ["HitPoint"] = CFrame.new(Vector3.new(v.Character.Torso.CFrame), Vector3.new(v.Character.Torso.CFrame)),
+       ["Damage"] = 100
+   }
+}
+
+game:GetService("ReplicatedStorage").GameEvents.Gameplay.DamageRequest:FireServer(unpack(args))
+end)
+end
+end
+end
+end)
+
+Section7:NewButton("RTX", "Rtx", function()
+    loadstring(game:HttpGet(('https://pastebin.com/raw/7rrgE4XL'),true))()
+end)
+
+Section8:NewButton("Invisible", "find somewhere safe to hide before using!!", function()
+    -- FE Invisible
+
+Local = game:GetService('Players').LocalPlayer
+Char  = Local.Character
+touched,tpdback = false, false
+Local.CharacterAdded:connect(function(char)
+    if script.Disabled ~= true then
+        wait(.25)
+        loc = Char.HumanoidRootPart.Position
+        Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+    end
+end)
+game:GetService('UserInputService').InputBegan:connect(function(key)
+    if key.KeyCode == Enum.KeyCode.Equals then
+        if script.Disabled ~= true then
+            script.Disabled = true
+            print'you may re-execute'
+        end
+    end
+end)
+box = Instance.new('Part',workspace)
+box.Anchored = true
+box.CanCollide = true
+box.Size = Vector3.new(10,1,10)
+box.Position = Vector3.new(0,10000,0)
+box.Touched:connect(function(part)
+    if (part.Parent.Name == Local.Name) then
+        if touched == false then
+            touched = true
+            function apply()
+                if script.Disabled ~= true then
+                    no = Char.HumanoidRootPart:Clone()
+                    wait(.25)
+                    Char.HumanoidRootPart:Destroy()
+                    no.Parent = Char
+                    Char:MoveTo(loc)
+                    touched = false
+                end end
+            if Char then
+                apply()
+            end
+        end
+    end
+end)
+repeat wait() until Char
+loc = Char.HumanoidRootPart.Position
+Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+end)
+  
+Section9:NewToggle("ESP", "shows Enemies", function()
+  local ESP = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kiriot22/ESP-Lib/main/ESP.lua"))()
+  ESP:Toggle(true)
+  ESP.TeamColor = true
+  ESP.Tracers = true
+end)
+
+Section10:NewToggle("Hitbox", "Makes The Enemies hitbox bigger", function()
+  _G.HeadSize = 22
+  _G.Disabled = true
+
+  game:GetService('RunService').RenderStepped:connect(function()
+    if _G.Disabled then
+    for i,v in next, game:GetService('Players'):GetPlayers() do
+    if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+    pcall(function()
+      v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+      v.Character.HumanoidRootPart.Transparency = 0.8
+      v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
+      v.Character.HumanoidRootPart.Material = "Plastic"
+      v.Character.HumanoidRootPart.CanCollide = false
+      end)
+    end
+    end
+    end
+    end)
+  end)
